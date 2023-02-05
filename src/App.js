@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import NewTaskForm from "./components/NewTaskForm";
+import TaskList from "./components/TaskList";
+import "./style.css";
+
+const initialData = [
+  { id: 1, title: "learn react" },
+  { id: 2, title: "read react" },
+  { id: 3, title: "write react" },
+];
 
 function App() {
+  const [task, setTask] = useState(initialData);
+
+  const onRemove = (id) => {
+    setTask(task.filter((elem) => elem.id !== id));
+  };
+
+ const editTask = (title) => {
+  setTask(title)
+ }
+  
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <section class="todoapp">
+        <NewTaskForm task={task} setTask={setTask}/>
+        <TaskList task={task} setTask={setTask} onRemove={onRemove} editTask={editTask} />
+      </section>
     </div>
   );
 }
